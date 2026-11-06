@@ -45,10 +45,32 @@ import "./Button.css";
  *   - Reference Button.css to see existing styles.
  */
 
-export function Button({children}) {
+export function Button({children, variant, size, color, disabled, icon, onClick}) {
+  // buttons in App that don't pass these should still be fill / medium / primary
+  if (!variant) {
+    variant = "fill";
+  }
+  if (!size) {
+    size = "medium";
+  }
+  if (!color) {
+    color = "primary";
+  }
+
+  const classes = [
+    "button",
+    `variant-${variant}`,
+    `size-${size}`,
+    `color-${color}`,
+    disabled ? "disabled" : ""
+  ].filter(Boolean).join(" ");
+
   return (
-    <button>
-        {children}
+    <button className={classes} disabled={disabled} onClick={onClick}>
+      {icon &&
+        <span className="icon">{icon}</span>
+      }
+      {children}
     </button>
   );
 }
